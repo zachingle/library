@@ -16,3 +16,6 @@ function addBookToLibrary() {
   myLibrary.push(newBook);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  
+});
