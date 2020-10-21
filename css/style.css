@@ -14,17 +14,21 @@ h1 {
   font-weight: 800;
 }
 main {
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
-#new {
-  width: 120px;
-  margin: 1em 0;
+
+button {
   cursor: pointer;
 }
 
-#table {  
+.new {
+  width: 120px;
+  margin: 1em 0;
+}
+
+.table {
   width: 1000px;
 }
 
@@ -42,19 +46,57 @@ table {
 }
 
 th {
-  padding: 10px 100px;
+  padding: 10px 10px;
 }
 
 td {
   padding: 10px;
+  text-align: center;
 }
 
-
-th:nth-child(3), th:nth-child(4) {
-  padding: 10px 10px;
+th:nth-child(1),
+th:nth-child(2) {
+  padding: 10px 100px;
 }
 
+th:nth-last-child(1) {
+  padding: 10px 38px;
+}
+
+th:nth-last-child(2) {
+  padding: 10px 102px
+}
 tbody {
   background-color: #fefefe;
   color: #424242;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+label,
+legend {
+  display: block;
+}
+
+fieldset label {
+  margin-left: 1em;
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.button-group {
+  margin-top: 2em;
+  text-align: center;
 }
