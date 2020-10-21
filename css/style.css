@@ -64,8 +64,13 @@ th:nth-last-child(1) {
 }
 
 th:nth-last-child(2) {
-  padding: 10px 102px
+  padding: 10px 102px;
 }
+
+th:nth-last-child(3) {
+  padding: 10px 24px;
+}
+
 tbody {
   background-color: #fefefe;
   color: #424242;
