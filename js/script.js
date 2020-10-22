@@ -26,7 +26,11 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-const addBookToLibrary = (title, author, pages, read) => {
+const addBookToLibrary = () => {
+  let title = $titleInput.value;
+  let author = $authorInput.value;
+  let pages = $pagesInput.value;
+  let read = getReadValue();
   let newBook = new Book(title, author, pages, read);
   myLibrary.push(newBook);
 }
@@ -39,10 +43,39 @@ const toggleHiddenElements = () => {
   $newButton.classList.toggle('hidden');
 }
 
+const addError = (el) => {
+  let $spanError = document.createElement('span');
+  $spanError.textContent = `Please enter a ${el.id}`;
+  $spanError.id = `${el.id}Error`
+  $spanError.classList.add('errorText');
+  $form.insertBefore($spanError, el);
+
+  el.classList.add('errorInput');
+
+  el.addEventListener('input', removeError);
+}
+
+const removeError = (el) => {
+  if (el.target.value != '') {
+    el.target.removeEventListener('input', removeError);
+    el.target.classList.remove('errorInput');
+    document.querySelector(`#${el.target.id}Error`).remove();
+  }
+}
+
+const validateForm = () => {
+  if ($titleInput.value == "" && document.querySelector('#titleError') == null) addError($titleInput);
+
+  if ($authorInput.value == "" && document.querySelector('#authorError') == null) addError($authorInput);
+
+  if ($pagesInput.value == "" && document.querySelector('#pagesError') == null) addError($pagesInput);
+  return false;
+}
+
 const clearForm = () => {
-  $titleInput.value = null;
-  $authorInput.value = null;
-  $pagesInput.value = null;
+  $titleInput.value = "";
+  $authorInput.value = "";
+  $pagesInput.value = "";
 }
 
 const createReadStatusTd = (book) => {
@@ -88,9 +121,12 @@ const updateTable = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  $pagesInput.addEventListener('input', () => {if(!$pagesInput.validity.valid) $pagesInput.value='' });
+  
   $newButton.addEventListener('click', toggleHiddenElements);
 
   $submitButton.addEventListener('click', () => {
+    if (validateForm() == false) return;
     addBookToLibrary();
     updateTable();
     toggleHiddenElements();
@@ -101,6 +137,4 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleHiddenElements();
     clearForm();
   });
-
-
 });

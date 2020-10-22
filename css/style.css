@@ -81,11 +81,6 @@ tbody {
   flex-direction: column;
 }
 
-label,
-legend {
-  display: block;
-}
-
 fieldset label {
   margin-left: 1em;
 }
@@ -104,4 +99,22 @@ fieldset {
 .button-group {
   margin-top: 2em;
   text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input {
+  margin: 10px 0;
+}
+
+.errorInput {
+  border: 2px solid #d5001f;
+}
+
+.errorText {
+  color: #d5001f;
 }
