@@ -43,7 +43,10 @@ const getStorage = () => {
   myLibrary = JSON.parse(localStorage.getItem('library'));
 }
 
-const getReadValue = () => $form.querySelector('input[name="read"]:checked').value;
+const getReadValue = () => {
+  if($form.querySelector('input[name="read"]:checked').value == 'yes') return true;
+  else return false;
+}
 
 const toggleHiddenElements = () => {
   $form.classList.toggle('hidden');
@@ -99,12 +102,34 @@ const createReadStatusTd = (book) => {
   return $readStatusTd;
 }
 
-const createDeleteReadStatusTd = (index) => {
+const removeFromLibrary = (index) => {
+  myLibrary.splice(index, 1)
+  $submitButton.removeEventListener('click', removeFromLibrary);
+  updateTable();
+}
+
+const createEditTd = (book, index) => {
+  let $editTd = document.createElement('td');
+  let $editButton = document.createElement('button');
+  $editButton.textContent = 'Edit';
+  $editButton.addEventListener('click', () => {
+    $titleInput.value = book.title;
+    $authorInput.value = book.author
+    $pagesInput.value = book.pages
+    book.read ? $form.querySelector('#yes').checked = true : $form.querySelector('#no').checked = true;
+    toggleHiddenElements();
+    $submitButton.addEventListener('click', removeFromLibrary);
+  });
+  $editTd.appendChild($editButton);
+  return $editTd;
+}
+
+const createDeleteTd = (index) => {
   let $deleteTd = document.createElement('td');
   let $deleteButton = document.createElement('button');
   $deleteButton.textContent = 'Delete';
   $deleteButton.addEventListener('click', () => {
-    myLibrary.splice(index);
+    myLibrary.splice(index, 1);
     updateTable();
   });
   $deleteTd.appendChild($deleteButton);
@@ -124,7 +149,8 @@ const updateTable = () => {
     }); 
 
     $row.appendChild(createReadStatusTd(book));
-    $row.appendChild(createDeleteReadStatusTd(index));
+    $row.appendChild(createEditTd(book, index));
+    $row.appendChild(createDeleteTd(index));
     $tbody.appendChild($row);
   });
 

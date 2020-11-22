@@ -59,23 +59,6 @@ td {
   text-align: center;
 }
 
-th:nth-child(1),
-th:nth-child(2) {
-  padding: 10px 100px;
-}
-
-th:nth-last-child(1) {
-  padding: 10px 38px;
-}
-
-th:nth-last-child(2) {
-  padding: 10px 102px;
-}
-
-th:nth-last-child(3) {
-  padding: 10px 24px;
-}
-
 tbody {
   background-color: #fefefe;
   color: #424242;
