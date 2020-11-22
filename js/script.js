@@ -35,6 +35,14 @@ const addBookToLibrary = () => {
   myLibrary.push(newBook);
 }
 
+const populateStorage = () => {
+  localStorage.setItem('library', JSON.stringify(myLibrary));
+}
+
+const getStorage = () => {
+  myLibrary = JSON.parse(localStorage.getItem('library'));
+}
+
 const getReadValue = () => $form.querySelector('input[name="read"]:checked').value;
 
 const toggleHiddenElements = () => {
@@ -65,11 +73,12 @@ const removeError = (el) => {
 
 const validateForm = () => {
   if ($titleInput.value == "" && document.querySelector('#titleError') == null) addError($titleInput);
-
   if ($authorInput.value == "" && document.querySelector('#authorError') == null) addError($authorInput);
-
   if ($pagesInput.value == "" && document.querySelector('#pagesError') == null) addError($pagesInput);
-  return false;
+
+  if ($titleInput.value == "" || $pagesInput.value == "" || $authorInput.value == "") return false;
+  else return true;
+
 }
 
 const clearForm = () => {
@@ -118,6 +127,8 @@ const updateTable = () => {
     $row.appendChild(createDeleteReadStatusTd(index));
     $tbody.appendChild($row);
   });
+
+  populateStorage();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -137,4 +148,12 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleHiddenElements();
     clearForm();
   });
+
+  if(!localStorage.getItem('library')) {
+    populateStorage();
+  } else {
+    getStorage();
+  }
+
+  updateTable();
 });
